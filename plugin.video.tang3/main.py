@@ -230,15 +230,24 @@ def get_video(s, name, videourl, refererurl):
         )
         return False
     url1 = streamURLs[0]
-    url2 = url1 # + ("|%s&Referer=%s&User-Agent=%s" % (BASE_URL, player_url, USER_AGENT))
+    url2 = html.unescape(url1) # + ("|%s&Referer=%s&User-Agent=%s" % (BASE_URL, player_url, USER_AGENT))
     addLog("url2: " + url2)
+    suburl = re.findall("src=(.+)", url1)
+    if(len(suburl) > 0):
+        url2 = suburl[0]
+        addLog("suburl2: " + url2)
     listitem = xbmcgui.ListItem(name)
     thumbnailImage = xbmc.getInfoImage("ListItem.Thumb")
     listitem.setArt({"icon": "DefaultVideo.png", "thumb": thumbnailImage})
     listitem.setProperty("IsPlayable", "true")
     listitem.setPath(url2)
-    # xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
-    xbmc.Player().play(url2)
+    listitem.setMimeType('application/dash+xml')
+    listitem.setContentLookup(False)
+    listitem.setProperty('inputstream', 'inputstream.adaptive')
+    listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd') # Deprecated on Kodi 21, removed on Kodi 22
+    # listitem.setProperty('inputstream.adaptive.manifest_type', 'hls') 
+    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
+    # xbmc.Player().play(url2)
 
     s.close()
     return True
