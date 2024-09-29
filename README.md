@@ -14,7 +14,7 @@
 
 #### Steps to add repository:
 * Go to "System Settings" > "Addons" > "Install from zip file" > "Tang"
-* Install [`repository.tang-1.0.0.zip`](zips/repository.tang/repository.tang-1.0.0.zip)
+* Install [`repository.tang-1.0.0.zip`](repository.tang-1.0.0.zip)
 * Complete Add-on repository installation
 
 #### Steps to install add-ons:
