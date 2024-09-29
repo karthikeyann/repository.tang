@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="repository.tang" name="Tang Kodi Repository" version="1.0.0" provider-name="Tang">
+    <extension point="xbmc.addon.repository" name="Tang Kodi Repository">
+        <dir>
+            <info compressed="false">https://github.com/karthikeyann/repository.tang/raw/master/zips/addons.xml</info>
+            <checksum>https://github.com/karthikeyann/repository.tang/raw/master/zips/addons.xml.md5</checksum>
+            <datadir zip="true">https://github.com/karthikeyann/repository.tang/raw/master/zips/</datadir>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Tang Kodi Repository</summary>
+        <description>Watch Tang repositories with m3u8 files</description>
+        <website>https://tang.github.io/</website>
+        <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tang3" name="Tang" version="3.0.11" provider-name="Tang">
+    <requires>
+        <import addon="repository.tang" version="1.0.0"/>
+        <import addon="xbmc.python" version="3.0.0"/>
+        <import addon="script.module.requests" version="2.22.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Tang Video Addon - Version 3.x</summary>
+        <description>Tang Video Addon for Kodi 19.x - Supports XBMC Python 3.x</description>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
+</addons>
