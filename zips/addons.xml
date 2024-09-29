@@ -3,8 +3,8 @@
 <addon id="repository.tang" name="Tang Kodi Repository" version="1.0.0" provider-name="Tang">
     <extension point="xbmc.addon.repository" name="Tang Kodi Repository">
         <dir>
-            <info compressed="false">https://github.com/karthikeyann/repository.tang/raw/master/zips/addons.xml</info>
-            <checksum>https://github.com/karthikeyann/repository.tang/raw/master/zips/addons.xml.md5</checksum>
+            <info compressed="false">https://github.com/karthikeyann/repository.tang/raw/gh-pages/zips/addons.xml</info>
+            <checksum>https://github.com/karthikeyann/repository.tang/raw/gh-pages/zips/addons.xml.md5</checksum>
             <datadir zip="true">https://github.com/karthikeyann/repository.tang/raw/master/zips/</datadir>
         </dir>
     </extension>
