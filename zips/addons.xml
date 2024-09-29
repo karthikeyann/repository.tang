@@ -16,7 +16,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.tang3" name="Tang" version="3.0.11" provider-name="Tang">
+<addon id="plugin.video.tang3" name="Tang" version="3.0.14" provider-name="Tang">
     <requires>
         <import addon="repository.tang" version="1.0.0"/>
         <import addon="xbmc.python" version="3.0.0"/>

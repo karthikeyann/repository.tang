@@ -122,12 +122,13 @@ def browse_results(name, url, mode):
 
 
 def list_videos(url, pattern):
+    addLog("list_videos: " + url)
     video_list = scrape_videos(url, pattern)
     # [(movie_url, title, description, next_page)]
     # TODO: what if the list is empty?
 
     for video_item in video_list:
-        movie_url, title, description, next_page = video_item
+        movie_url, title, description, refurl, next_page = video_item
         addDir(
             title,
             movie_url,
@@ -144,20 +145,26 @@ def list_videos(url, pattern):
 
 
 def scrape_videos(url, pattern):
+    addLog("scrape_videos: " + url)
     html1 = requests.get(url).text
+    addLog("html1: " + str(html1))
     results = []
     next_page = ""
-    regexstr = 'class="post-listing-title".+?href="(.+?)".+?title="(.+?)".+?>(.+?)<\/a>'
+    regexstr = 'class="post-listing-title".+?href="(.+?)".+?title="(.+?)">(.+?)<\/a>'
     video_matches = re.findall(regexstr, html1)
+    addLog("video_matches: " + str(len(video_matches)))
     nextpage_regexstr = 'class="nextpostslink".+?href="(.+?)">'
     next_matches = re.findall(nextpage_regexstr, html1)
+    addLog("next_matches: " + str(len(next_matches)))
     if len(next_matches) > 0:
         next_page = next_matches[-1][0]
     refererurl = url
     for item in video_matches:
         movie_url = item[0]
-        movie_title = item[1].encode("ascii", "ignore").decode("ascii")
-        movie_description = item[2].encode("ascii", "ignore").decode("ascii")
+        # py_2x_3x
+        movie_title = html.unescape(item[1].encode("ascii", "ignore").decode("ascii"))
+        # movie_title = HTMLParser.HTMLParser().unescape(item[1]).encode("utf-8")
+        movie_description = html.unescape(item[2].encode("ascii", "ignore").decode("ascii"))
         results.append(
             (
                 str(movie_url),
@@ -209,10 +216,7 @@ def get_video(s, name, videourl, refererurl):
             "Video URL not found. Please report this issue to the developer.",
         )
         return False
-    csrf1 = csrf1[0].decode('string_escape')
-    # py_2x_3x
-    csrf1 = html.unescape(csrf1)
-    # csrf1 = HTMLParser.HTMLParser().unescape(csrf1).encode("utf-8")
+    csrf1 = csrf1[0].replace("\\", "").replace('"', "")
     player_url = csrf1
 
     addLog("get_player: " + str(player_url))
@@ -226,14 +230,15 @@ def get_video(s, name, videourl, refererurl):
         )
         return False
     url1 = streamURLs[0]
-    url2 = url1 + ("|%s&Referer=%s&User-Agent=%s" % (BASE_URL, player_url, USER_AGENT))
+    url2 = url1 # + ("|%s&Referer=%s&User-Agent=%s" % (BASE_URL, player_url, USER_AGENT))
     addLog("url2: " + url2)
     listitem = xbmcgui.ListItem(name)
     thumbnailImage = xbmc.getInfoImage("ListItem.Thumb")
     listitem.setArt({"icon": "DefaultVideo.png", "thumb": thumbnailImage})
     listitem.setProperty("IsPlayable", "true")
     listitem.setPath(url2)
-    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
+    # xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, listitem)
+    xbmc.Player().play(url2)
 
     s.close()
     return True
@@ -249,17 +254,18 @@ name="Home"
 
 def router():
     params = dict(args)
+    addLog("get_params: " + str(params))
 
     try:
-        url = urllib.parse.unquote_plus(params["url"])
+        url = urllib.parse.unquote_plus(params["url"][0])
     except:
         pass
     try:
-        mode = urllib.parse.unquote_plus(params["mode"])
+        mode = urllib.parse.unquote_plus(params["mode"][0])
     except:
         pass
     try:
-        name = urllib.parse.unquote_plus(params["name"])
+        name = urllib.parse.unquote_plus(params["name"][0])
     except:
         pass
 
