@@ -1,4 +1,4 @@
-# Tang Kodi Repository [[https://karthikeyann.github.io/repository.tang/]](https://karthikeyann.github.io/repository.tang/)
+# [Tang Kodi Repository](https://karthikeyann.github.io/repository.tang/)
 
 #### Enable Installation of add-ons from unknown sources:
 * Go to "System Settings" > "System" > "Add-ons"
@@ -8,13 +8,13 @@
 #### Steps to add source:
 * Go to "System Settings" > "File Manager" > "Add Source"
 * Click "\<None>"
-* Type "https://karthikeyann.github.io/repository.tang/zips/repository.tang"
+* Type "https://karthikeyann.github.io/repository.tang"
 * Enter "Tang" as name for this media source
 * Click "OK"
 
 #### Steps to add repository:
 * Go to "System Settings" > "Addons" > "Install from zip file" > "Tang"
-* Install `repository.tang-1.0.0.zip`
+* Install [`repository.tang-1.0.0.zip`](zips/repository.tang/repository.tang-1.0.0.zip)
 * Complete Add-on repository installation
 
 #### Steps to install add-ons:
